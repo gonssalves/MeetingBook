@@ -1,6 +1,6 @@
 package com.ifal.dao;
 
-// Entidade
+// DAO
 public class Recurso {
     
 }
