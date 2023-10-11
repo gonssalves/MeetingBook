@@ -39,4 +39,5 @@ public abstract class UsuarioBase {
 
     // Métodos que devem ser implementados pela subclasse
     public abstract String obterTipoUsuario();
+    public abstract int obterIdFuncao();
 }
