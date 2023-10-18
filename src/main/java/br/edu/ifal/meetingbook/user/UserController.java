@@ -1,14 +1,18 @@
 package br.edu.ifal.meetingbook.user;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/users")
@@ -35,5 +39,12 @@ public class UserController {
         // Salve o novo usuário no banco de dados.
         var userCreated = this.userRepository.save(userModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(userCreated);
+    }
+
+    // Endpoint para listar todos os usuários
+    @GetMapping("/")
+    public List<UserModel> listAll(HttpServletRequest request) {
+        var users = this.userRepository.findAll();
+        return users;
     }
 }
