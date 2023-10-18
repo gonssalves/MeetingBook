@@ -102,6 +102,6 @@ public class UserController {
         }
     
         userRepository.deleteById(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build(); // Resposta sem corpo
     }
 }
