@@ -1,11 +1,13 @@
 package br.edu.ifal.meetingbook.user;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,5 +48,17 @@ public class UserController {
     public List<UserModel> listAll(HttpServletRequest request) {
         var users = this.userRepository.findAll();
         return users;
+    }
+
+    // Endpoint para listar um único usuário por ID
+    @GetMapping("/{id}")
+    public ResponseEntity listOne(@PathVariable UUID id) {
+        var user = userRepository.findById(id);
+
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 }
