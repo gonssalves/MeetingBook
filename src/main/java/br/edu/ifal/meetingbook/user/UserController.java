@@ -69,4 +69,17 @@ public class UserController {
         userRepository.deleteAll();
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+    // Endpoint para excluir um usuário por ID
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteOne(@PathVariable UUID id) {
+        var user = userRepository.findById(id);
+    
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
+        }
+    
+        userRepository.deleteById(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }
