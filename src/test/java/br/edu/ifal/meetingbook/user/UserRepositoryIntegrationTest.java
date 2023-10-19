@@ -23,14 +23,25 @@ public class UserRepositoryIntegrationTest {
     public void testFindByEmail() {
         // Crie um usuário de exemplo e persista-o no banco de dados
         UserModel user = new UserModel("Kanye West", "kimye", "kimye@gmail.com", "1234", "Cliente");
-        user.setEmail("test@example.com");
         entityManager.persist(user);
 
         // Use o método findByEmail para buscar o usuário no banco de dados
-        UserModel foundUser = userRepository.findByEmail("test@example.com");
+        UserModel foundUser = userRepository.findByEmail("kimye@gmail.com");
 
         // Verifique se o usuário foi encontrado com sucesso
         assertThat(foundUser).isNotNull();
-        assertThat(foundUser.getEmail()).isEqualTo("test@example.com");
+        assertThat(foundUser.getEmail()).isEqualTo("kimye@gmail.com");
+    }
+
+    @Test
+    @Rollback(false)
+    public void testFindByUsername() {
+        UserModel user = new UserModel("Kanye West", "kimye", "kimye@gmail.com", "1234", "Cliente");
+        entityManager.persist(user);
+
+        UserModel foundUser = userRepository.findByUsername("kimye");
+
+        assertThat(foundUser).isNotNull();
+        assertThat(foundUser.getUsername()).isEqualTo("kimye");
     }
 }
