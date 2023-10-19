@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,12 +47,30 @@ public class RoomController {
      @GetMapping("/{id}")
     public ResponseEntity<Object> listOne(@PathVariable UUID id) {
         var room = roomRepository.findById(id);
-
+        
         if (room == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Sala não encontrada");
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(room);
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity update(HttpServletRequest request, @RequestBody RoomModel updatedRoom) {
+        var room = this.roomRepository.findById(updatedRoom.getId());
+
+        System.out.println("###########################" + request);
+        return null;
+
+        // if(room == null) {
+        //     return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Sala não foi encontrada");
+        // }
+        
+        // RoomModel roomToBeUpdated = room.get();
+        // Utils.copyNonNullProperties(updatedRoom, roomToBeUpdated);
+        // updatedRoom = roomRepository.save(roomToBeUpdated);
+
+        // return ResponseEntity.status(HttpStatus.OK).body(updatedRoom);
     }
 
     @DeleteMapping("/")
