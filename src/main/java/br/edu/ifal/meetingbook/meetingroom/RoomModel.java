@@ -1,5 +1,6 @@
 package br.edu.ifal.meetingbook.meetingroom;
 
+import java.util.List;
 import java.util.UUID;
 
 import jakarta.persistence.Column;
@@ -22,6 +23,8 @@ public abstract class RoomModel {
     private float hourPrice;
     private String roomType;
 
+    private List<String> resources;
+
      /**
      * Construtor da classe RoomModel.
      *
@@ -30,11 +33,12 @@ public abstract class RoomModel {
      * @param hourPrice     O preço hora do aluguel da sala.
      * @param roomType      O tipo da sala de acordo com o tamanho.
      */
-    public RoomModel(int roomNumber, int capacity, float hourPrice, String roomType){
+    public RoomModel(int roomNumber, int capacity, float hourPrice, String roomType, List<String> resources){
         this.roomNumber = roomNumber;
         this.capacity = capacity;
         this.hourPrice = hourPrice;
         this.roomType = roomType;
+        this.resources = resources;
     }
 
     public abstract boolean hasVideoConference();
