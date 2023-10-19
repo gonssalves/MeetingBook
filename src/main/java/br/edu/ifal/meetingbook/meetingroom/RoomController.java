@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.edu.ifal.meetingbook.utils.Utils;
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -55,23 +56,21 @@ public class RoomController {
         return ResponseEntity.status(HttpStatus.OK).body(room);
     }
 
-    @PutMapping("/update")
-    public ResponseEntity update(HttpServletRequest request, @RequestBody RoomModel updatedRoom) {
-        var room = this.roomRepository.findById(updatedRoom.getId());
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> update(@RequestBody RoomModel toBeUpdatedroom, HttpServletRequest request, @PathVariable UUID id) {
+        var room = this.roomRepository.findById(id).orElse(null);
 
-        System.out.println("###########################" + request);
-        return null;
+        System.out.println(request);
 
-        // if(room == null) {
-        //     return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Sala não foi encontrada");
-        // }
+        if(room == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Sala não encontrada");
+        }
         
-        // RoomModel roomToBeUpdated = room.get();
-        // Utils.copyNonNullProperties(updatedRoom, roomToBeUpdated);
-        // updatedRoom = roomRepository.save(roomToBeUpdated);
+        Utils.copyNonNullProperties(toBeUpdatedroom, room);
+        var roomUpdated = this.roomRepository.save(room);
 
-        // return ResponseEntity.status(HttpStatus.OK).body(updatedRoom);
-    }
+        return ResponseEntity.ok().body(roomUpdated);
+    }   
 
     @DeleteMapping("/")
     public ResponseEntity<Void> deleteAll() {
