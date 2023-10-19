@@ -66,24 +66,21 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<Object> update(HttpServletRequest request, @RequestBody UserModel updatedUser) {
-        // Obtenha o ID do usuário autenticado a partir do atributo da requisição.
-        UUID authenticatedUserId = (UUID) request.getAttribute("idUser");
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> update(@RequestBody UserModel toBeUpdatedUser, HttpServletRequest request, @PathVariable UUID id) {
+        var user = this.userRepository.findById(id).orElse(null);
 
-        // Verifique se o usuário que está sendo atualizado existe.
-        Optional<UserModel> existingUser = userRepository.findById(authenticatedUserId);
-        if (!existingUser.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
+        System.out.println(request);
+
+        if(user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Recurso não encontrado");
         }
+        
+        Utils.copyNonNullProperties(toBeUpdatedUser, user);
+        var resourceUpdated = this.userRepository.save(user);
 
-        // Realize a atualização dos campos permitidos.
-        UserModel userToUpdate = existingUser.get();
-        Utils.copyNonNullProperties(updatedUser, userToUpdate);
-        updatedUser = userRepository.save(userToUpdate);
-
-        return ResponseEntity.status(HttpStatus.OK).body(updatedUser);
-    }
+        return ResponseEntity.ok().body(resourceUpdated);
+    } 
 
     // Endpoint para excluir todos os usuários
     @DeleteMapping("/")
