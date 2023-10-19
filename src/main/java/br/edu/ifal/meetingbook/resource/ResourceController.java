@@ -9,11 +9,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.ifal.meetingbook.meetingroom.IRoomRepository;
+import br.edu.ifal.meetingbook.meetingroom.RoomModel;
+import br.edu.ifal.meetingbook.utils.Utils;
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
@@ -61,5 +64,19 @@ public class ResourceController {
         return ResponseEntity.status(HttpStatus.OK).body(resource);
     }
 
-    
+    @PutMapping("/")
+    public ResponseEntity<Object> update(@RequestBody ResourceModel toBeUpdatedResource, HttpServletRequest request, @PathVariable UUID id) {
+        var resource = this.resourceRepository.findById(id).orElse(null);
+
+        System.out.println(request);
+
+        if(resource == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Recurso não encontrado");
+        }
+        
+        Utils.copyNonNullProperties(toBeUpdatedResource, resource);
+        var resourceUpdated = this.resourceRepository.save(resource);
+
+        return ResponseEntity.ok().body(resourceUpdated);
+    }    
 }
