@@ -22,6 +22,21 @@ public abstract class RoomModel {
     private float hourPrice;
     private String roomType;
 
+     /**
+     * Construtor da classe RoomModel.
+     *
+     * @param roomNumber    O número da sala de reunião exclusivo.
+     * @param capacity      A número de pessoas que a sala acomoda.
+     * @param hourPrice     O preço hora do aluguel da sala.
+     * @param roomType      O tipo da sala de acordo com o tamanho.
+     */
+    public RoomModel(int roomNumber, int capacity, float hourPrice, String roomType){
+        this.roomNumber = roomNumber;
+        this.capacity = capacity;
+        this.hourPrice = hourPrice;
+        this.roomType = roomType;
+    }
+
     public abstract boolean hasVideoConference();
 
     public abstract boolean hasCoffeMachine();
