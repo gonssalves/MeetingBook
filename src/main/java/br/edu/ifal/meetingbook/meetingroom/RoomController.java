@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -51,6 +52,12 @@ public class RoomController {
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(room);
+    }
+
+    @DeleteMapping("/")
+    public ResponseEntity<Void> deleteAll() {
+        roomRepository.deleteAll();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
     
 }
