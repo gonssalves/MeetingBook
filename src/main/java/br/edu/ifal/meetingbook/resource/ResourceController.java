@@ -63,7 +63,7 @@ public class ResourceController {
         return ResponseEntity.status(HttpStatus.OK).body(resource);
     }
 
-    @PutMapping("/")
+    @PutMapping("/{id}")
     public ResponseEntity<Object> update(@RequestBody ResourceModel toBeUpdatedResource, HttpServletRequest request, @PathVariable UUID id) {
         var resource = this.resourceRepository.findById(id).orElse(null);
 
