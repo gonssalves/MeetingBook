@@ -1,5 +1,7 @@
 package br.edu.ifal.meetingbook.meetingroom;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,12 +10,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController()
+import br.edu.ifal.meetingbook.user.UserModel;
+import jakarta.servlet.http.HttpServletRequest;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+
+@RestController
 @RequestMapping("/rooms")
 public class RoomController {
     
     @Autowired
     private IRoomRepository roomRepository;
+
     @PostMapping("/")
     public ResponseEntity create(@RequestBody RoomModel roomModel) {
         var room = this.roomRepository.findByRoomNumber(roomModel.getRoomNumber());
@@ -23,6 +33,13 @@ public class RoomController {
         }
 
         var roomCreated = this.roomRepository.save(roomModel);
-        return ResponseEntity.status(HttpStatus.CREATED).body(roomCreated);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Sala de Reunião criada");
     }
+
+   @GetMapping("/")
+    public List<RoomModel> listAll(HttpServletRequest request) {
+        var rooms = this.roomRepository.findAll();
+        return rooms;
+    }
+    
 }
