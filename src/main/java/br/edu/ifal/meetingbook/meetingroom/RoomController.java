@@ -10,11 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.edu.ifal.meetingbook.user.UserModel;
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
@@ -25,7 +23,7 @@ public class RoomController {
     private IRoomRepository roomRepository;
 
     @PostMapping("/")
-    public ResponseEntity create(@RequestBody RoomModel roomModel) {
+    public ResponseEntity<Object> create(@RequestBody RoomModel roomModel) {
         var room = this.roomRepository.findByRoomNumber(roomModel.getRoomNumber());
 
         if(room != null) {
@@ -33,7 +31,7 @@ public class RoomController {
         }
 
         var roomCreated = this.roomRepository.save(roomModel);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Sala de Reunião criada");
+        return ResponseEntity.status(HttpStatus.CREATED).body(roomCreated);
     }
 
    @GetMapping("/")
