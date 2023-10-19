@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface IUserRepository extends JpaRepository<UserModel, UUID> {
     // Método para buscar um usuário por email
     UserModel findByEmail(String email);
-
     // Método para buscar um usuário por nome de usuário (username)
     UserModel findByUsername(String username);
 }
