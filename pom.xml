@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.edu.ifal</groupId>
-	<artifactId>todolist</artifactId>
+	<artifactId>meetingbook</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>meetingbook</name>
 	<description>Reserva de Salas de Reunião</description>
