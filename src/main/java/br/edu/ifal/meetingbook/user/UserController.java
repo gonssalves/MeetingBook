@@ -1,7 +1,6 @@
 package br.edu.ifal.meetingbook.user;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
