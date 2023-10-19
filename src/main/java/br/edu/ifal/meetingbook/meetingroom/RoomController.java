@@ -59,5 +59,17 @@ public class RoomController {
         roomRepository.deleteAll();
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteOne(@PathVariable UUID id) {
+        var room = roomRepository.findById(id);
+    
+        if (room == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Sala não encontrada");
+        }
+    
+        roomRepository.deleteById(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build(); // Resposta sem corpo
+    }
     
 }
