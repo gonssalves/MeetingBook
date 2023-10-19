@@ -29,7 +29,7 @@ public class UserController {
 
     // Endpoint para criar um novo usuário
     @PostMapping("/")
-    public ResponseEntity create(@RequestBody UserModel userModel) {
+    public ResponseEntity<Object> create(@RequestBody UserModel userModel) {
         // Verifique se o usuário já existe no banco de dados.
         var user = this.userRepository.findByEmail(userModel.getEmail());
         
@@ -56,7 +56,7 @@ public class UserController {
 
     // Endpoint para listar um único usuário por ID
     @GetMapping("/{id}")
-    public ResponseEntity listOne(@PathVariable UUID id) {
+    public ResponseEntity<Object> listOne(@PathVariable UUID id) {
         var user = userRepository.findById(id);
 
         if (user == null) {
@@ -67,7 +67,7 @@ public class UserController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity update(HttpServletRequest request, @RequestBody UserModel updatedUser) {
+    public ResponseEntity<Object> update(HttpServletRequest request, @RequestBody UserModel updatedUser) {
         // Obtenha o ID do usuário autenticado a partir do atributo da requisição.
         UUID authenticatedUserId = (UUID) request.getAttribute("idUser");
 
@@ -87,14 +87,14 @@ public class UserController {
 
     // Endpoint para excluir todos os usuários
     @DeleteMapping("/")
-    public ResponseEntity deleteAll() {
+    public ResponseEntity<Void> deleteAll() {
         userRepository.deleteAll();
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     // Endpoint para excluir um usuário por ID
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteOne(@PathVariable UUID id) {
+    public ResponseEntity<Object> deleteOne(@PathVariable UUID id) {
         var user = userRepository.findById(id);
     
         if (user == null) {
@@ -102,6 +102,6 @@ public class UserController {
         }
     
         userRepository.deleteById(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build(); // Resposta sem corpo
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
