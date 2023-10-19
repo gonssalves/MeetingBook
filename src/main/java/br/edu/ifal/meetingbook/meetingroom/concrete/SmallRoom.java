@@ -1,13 +1,11 @@
 package br.edu.ifal.meetingbook.meetingroom.concrete;
 
-import java.util.List;
-
 import br.edu.ifal.meetingbook.meetingroom.RoomModel;
 
 public class SmallRoom extends RoomModel{
     
-    public SmallRoom(int roomNumber, int capacity, float hourPrice, String roomType, List<String> resources){
-        super(roomNumber, capacity, hourPrice, roomType, resources);
+    public SmallRoom(int roomNumber, int capacity, float hourPrice, String roomType){
+        super(roomNumber, capacity, hourPrice, roomType);
     }
 
     @Override
@@ -26,5 +24,11 @@ public class SmallRoom extends RoomModel{
     public int numOfComputers() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'numOfComputers'");
+    }
+
+    @Override
+    public int listResources() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'listResources'");
     }
 }
