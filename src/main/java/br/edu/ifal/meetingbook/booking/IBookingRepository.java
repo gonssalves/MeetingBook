@@ -11,7 +11,7 @@ public interface IBookingRepository extends JpaRepository<BookingModel, UUID>{
     List<BookingModel> findByRoomId(UUID roomId);
     List<BookingModel> findByBookingDate(String bookingDate);
     List<BookingModel> findByBookingStatus(String bookingStatus);
-    List<BookingModel> findByUserAndRoomId(UUID userId, UUID roomId);
-    List<BookingModel> findByUserIdAndBookingStatus(UUID userId, String bookingStatus);
-    List<BookingModel> findByRoomIdAndBookingStatus(UUID roomId, String bookingStatus);   
+    // List<BookingModel> findByUserAndRoomId(UUID userId, UUID roomId);
+    // List<BookingModel> findByUserIdAndBookingStatus(UUID userId, String bookingStatus);
+    // List<BookingModel> findByRoomIdAndBookingStatus(UUID roomId, String bookingStatus);   
 }

@@ -57,6 +57,16 @@ public class BookingController {
         if(bookingUser == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário dono da reserva não existe");
         }
+        
+        /*
+         * POSSÍVEIS CONFLITOS NO HORÁRIO DA RESERVA
+         * Listar reservas por data V
+         * Verificar horário de início e fim
+         * Verificar status da reserva
+        */
+
+        List<BookingModel> bookingList = this.bookingRepository.findByBookingDate((bookingModel.getBookingDate()));
+        System.out.println("##############################################" + bookingList);
 
         var bookingCreated = this.bookingRepository.save(bookingModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(bookingCreated);
