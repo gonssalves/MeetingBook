@@ -13,11 +13,12 @@ public class BookingModel {
     
     @Id
     @GeneratedValue(generator = "UUID")
-    private String id;
+    private UUID id;
     
     private int bookingNumber;
     private String bookingDate;
-    private String bookingTime;
+    private int bookingStartTime;
+    private int bookingEndTime;
     private float bookingPrice;
     private String bookingStatus; // "Pendente", "Confirmada", "Cancelada"
     
