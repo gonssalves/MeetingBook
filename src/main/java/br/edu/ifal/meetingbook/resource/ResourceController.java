@@ -58,7 +58,7 @@ public class ResourceController {
         var resource = resourceRepository.findById(id);
         
         if (resource == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Recurso não encontrada");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Recurso não encontrado");
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(resource);
