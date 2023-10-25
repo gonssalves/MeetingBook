@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IBookingRepository extends JpaRepository<BookingModel, UUID>{
+    BookingModel findByBookingNumber(int bookingNumber);
     List<BookingModel> findByUserId(UUID userId);
     List<BookingModel> findByRoomId(UUID roomId);
     List<BookingModel> findByBookingDate(String bookingDate);
