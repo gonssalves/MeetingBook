@@ -50,4 +50,7 @@ public class UserModel {
         this.password = password;
         this.type = type;
     }
+
+    public UserModel() {
+    }
 }
