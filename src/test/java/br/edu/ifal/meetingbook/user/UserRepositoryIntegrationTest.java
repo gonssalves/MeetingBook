@@ -19,7 +19,7 @@ public class UserRepositoryIntegrationTest {
     private IUserRepository userRepository;
 
     @Test
-    @Rollback(false) // Se você não deseja desfazer as alterações no banco de dados após o teste
+    @Rollback(false) // Desfaz as alterações no banco de dados após o teste
     public void testFindByEmail() {
         // Crie um usuário de exemplo e persista-o no banco de dados
         UserModel user = new UserModel("Kanye West", "kimye", "kimye@gmail.com", "1234", "Cliente");
