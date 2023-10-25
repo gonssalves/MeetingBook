@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.edu.ifal.meetingbook.meetingroom.IRoomRepository;
 import br.edu.ifal.meetingbook.resource.ResourceModel;
 import br.edu.ifal.meetingbook.user.IUserRepository;
+import br.edu.ifal.meetingbook.utils.Utils;
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
@@ -77,5 +78,20 @@ public class BookingController {
         return ResponseEntity.status(HttpStatus.OK).body(booking);
     }    
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> update(@RequestBody ResourceModel toBeUpdatedBooking, HttpServletRequest request, @PathVariable UUID id) {
+        var booking = this.bookingRepository.findById(id).orElse(null);
+
+        System.out.println(request);
+
+        if(booking == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Reserva não encontrada");
+        }
+        
+        Utils.copyNonNullProperties(toBeUpdatedBooking, booking);
+        var bookingUpdated = this.bookingRepository.save(booking);
+
+        return ResponseEntity.ok().body(bookingUpdated);
+    } 
     
 }
