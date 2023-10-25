@@ -15,6 +15,7 @@ public class BookingModel {
     @GeneratedValue(generator = "UUID")
     private String id;
     
+    private int bookingNumber;
     private String bookingDate;
     private String bookingTime;
     private float bookingPrice;
