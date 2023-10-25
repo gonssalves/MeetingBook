@@ -23,7 +23,7 @@ public class DataInitializer implements CommandLineRunner { // Permite executar 
             var hashedPassword = BCrypt.withDefaults().hashToString(12, "admin".toCharArray());
             
             // Cria um novo objeto UserModel para o usuário inicial
-            UserModel user = new UserModel("Ademar da Silva", "adsilva", "admin@gerencia.com", hashedPassword, "Gerente");
+            UserModel user = new UserModel("Ademar da Silva", "admin", "admin@gerencia.com", hashedPassword, "Gerente");
 
             // Salva o usuário no repositório
             userRepository.save(user);
