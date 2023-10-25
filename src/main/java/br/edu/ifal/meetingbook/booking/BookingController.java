@@ -93,5 +93,11 @@ public class BookingController {
 
         return ResponseEntity.ok().body(bookingUpdated);
     } 
+
+    @DeleteMapping("/")
+    public ResponseEntity<Void> deleteAll() {
+        bookingRepository.deleteAll();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
     
 }
