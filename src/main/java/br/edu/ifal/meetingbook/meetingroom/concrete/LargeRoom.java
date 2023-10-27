@@ -1,7 +1,9 @@
 package br.edu.ifal.meetingbook.meetingroom.concrete;
 
 import br.edu.ifal.meetingbook.meetingroom.RoomModel;
+import jakarta.persistence.Entity;
 
+@Entity
 public class LargeRoom extends RoomModel{
     
     public LargeRoom(int roomNumber, int capacity, float hourPrice, String roomType){

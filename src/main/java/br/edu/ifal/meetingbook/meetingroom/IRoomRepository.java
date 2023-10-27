@@ -7,7 +7,7 @@ import java.util.List;
 
 
 public interface IRoomRepository extends JpaRepository<RoomModel, UUID> {
-    List<RoomModel> findByRoomNumber(int roomNumber);
+    RoomModel findByRoomNumber(int roomNumber);
     List<RoomModel> findByCapacity(int capacity);
     List<RoomModel> findByRoomType(String roomType);
 }
