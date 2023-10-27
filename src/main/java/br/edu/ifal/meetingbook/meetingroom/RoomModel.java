@@ -6,10 +6,13 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import lombok.Data;
 
+@Entity(name = "tbl_rooms")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE) // Permite que subclasses sejam armazenadas na mesma tabela
 @Data
-@Entity(name="tbl_rooms")
 public abstract class RoomModel {
     
     @Id
