@@ -77,10 +77,10 @@ public class DataInitializer implements CommandLineRunner { // Permite executar 
                 
                 booking.setBookingNumber(7);
                 booking.setBookingDate("25-10-2023");
-                booking.setBookingStartTime(13);
-                booking.setBookingEndTime(14);
+                booking.setBookingStartTime(1300);
+                booking.setBookingEndTime(1400);
                 booking.setBookingPrice(79.8f);
-                booking.setBookingStatus("Confirmado");
+                booking.setBookingStatus("Pendente");
                 
                 UserModel user = this.userRepository.findByUsername("admin");
     
@@ -88,6 +88,20 @@ public class DataInitializer implements CommandLineRunner { // Permite executar 
                 booking.setUserId(user.getId());
     
                 bookingRepository.save(booking);
+
+                BookingModel booking1 = new BookingModel();
+
+                booking1.setBookingNumber(4);
+                booking1.setBookingDate("25-10-2023");
+                booking1.setBookingStartTime(1430);
+                booking1.setBookingEndTime(1800);
+                booking1.setBookingPrice(79.8f);
+                booking1.setBookingStatus("Confirmado");
+                    
+                booking1.setRoomId(room.getId());
+                booking1.setUserId(user.getId());
+    
+                bookingRepository.save(booking1);
             }
             }
             
