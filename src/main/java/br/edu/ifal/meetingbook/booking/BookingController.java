@@ -61,6 +61,17 @@ public class BookingController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário dono da reserva não existe");
         }
         
+        int startTime = bookingModel.getBookingStartTime();
+        int endTime = bookingModel.getBookingEndTime();
+
+        if(startTime < 0000 || startTime > 2359 || endTime < 0000 || endTime > 2359) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Horário inválido");
+        }
+
+        if(startTime > endTime) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Horário de início não pode ser maior que o horário de fim");
+        }
+
         /*
          * POSSÍVEIS CONFLITOS NO HORÁRIO DA RESERVA
          * Listar reservas por data V
