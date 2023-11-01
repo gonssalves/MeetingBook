@@ -34,7 +34,7 @@ public class BookingController {
     private IUserRepository userRepository;
     
 
-    @PutMapping("/")
+    @PostMapping("/")
     public ResponseEntity<Object> create(@RequestBody BookingModel bookingModel) {
         var booking = this.bookingRepository.findByBookingNumber(bookingModel.getBookingNumber());   
         
