@@ -1,4 +1,4 @@
-package br.edu.ifal.meetingbook.resource;
+package br.edu.ifal.meetingbook.entities.resource;
 
 import java.util.UUID;
 

@@ -1,4 +1,4 @@
-package br.edu.ifal.meetingbook.resource;
+package br.edu.ifal.meetingbook.entities.resource;
 
 import java.util.List;
 import java.util.UUID;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.edu.ifal.meetingbook.meetingroom.IRoomRepository;
+import br.edu.ifal.meetingbook.entities.meetingroom.IRoomRepository;
 import br.edu.ifal.meetingbook.utils.Utils;
 import jakarta.servlet.http.HttpServletRequest;
 

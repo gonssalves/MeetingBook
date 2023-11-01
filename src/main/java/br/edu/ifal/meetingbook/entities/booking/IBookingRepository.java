@@ -1,4 +1,5 @@
-package br.edu.ifal.meetingbook.booking;
+
+package br.edu.ifal.meetingbook.entities.booking;
 
 import java.util.List;
 import java.util.UUID;

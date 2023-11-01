@@ -5,6 +5,10 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import br.edu.ifal.meetingbook.entities.user.IUserRepository;
+import br.edu.ifal.meetingbook.entities.user.UserModel;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import static org.assertj.core.api.Assertions.assertThat;

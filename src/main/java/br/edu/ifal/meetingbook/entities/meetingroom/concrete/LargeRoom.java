@@ -1,6 +1,6 @@
-package br.edu.ifal.meetingbook.meetingroom.concrete;
+package br.edu.ifal.meetingbook.entities.meetingroom.concrete;
 
-import br.edu.ifal.meetingbook.meetingroom.RoomModel;
+import br.edu.ifal.meetingbook.entities.meetingroom.RoomModel;
 import jakarta.persistence.Entity;
 
 @Entity

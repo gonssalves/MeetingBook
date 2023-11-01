@@ -2,9 +2,9 @@ package br.edu.ifal.meetingbook.meetingroom;
 
 import org.junit.Test;
 
-import br.edu.ifal.meetingbook.meetingroom.concrete.LargeRoom;
-import br.edu.ifal.meetingbook.meetingroom.concrete.MediumRoom;
-import br.edu.ifal.meetingbook.meetingroom.concrete.SmallRoom;
+import br.edu.ifal.meetingbook.entities.meetingroom.concrete.LargeRoom;
+import br.edu.ifal.meetingbook.entities.meetingroom.concrete.MediumRoom;
+import br.edu.ifal.meetingbook.entities.meetingroom.concrete.SmallRoom;
 
 public class RoomModelUnitTest {
     

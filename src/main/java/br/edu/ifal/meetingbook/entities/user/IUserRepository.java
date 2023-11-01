@@ -1,4 +1,4 @@
-package br.edu.ifal.meetingbook.user;
+package br.edu.ifal.meetingbook.entities.user;
 
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;

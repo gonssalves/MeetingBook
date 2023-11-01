@@ -5,14 +5,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
-import br.edu.ifal.meetingbook.booking.BookingModel;
-import br.edu.ifal.meetingbook.booking.IBookingRepository;
-import br.edu.ifal.meetingbook.meetingroom.IRoomRepository;
-import br.edu.ifal.meetingbook.meetingroom.concrete.LargeRoom;
-import br.edu.ifal.meetingbook.resource.IResourceRepository;
-import br.edu.ifal.meetingbook.resource.ResourceModel;
-import br.edu.ifal.meetingbook.user.IUserRepository;
-import br.edu.ifal.meetingbook.user.UserModel;
+import br.edu.ifal.meetingbook.entities.booking.BookingModel;
+import br.edu.ifal.meetingbook.entities.booking.IBookingRepository;
+import br.edu.ifal.meetingbook.entities.meetingroom.IRoomRepository;
+import br.edu.ifal.meetingbook.entities.meetingroom.concrete.LargeRoom;
+import br.edu.ifal.meetingbook.entities.resource.IResourceRepository;
+import br.edu.ifal.meetingbook.entities.resource.ResourceModel;
+import br.edu.ifal.meetingbook.entities.user.IUserRepository;
+import br.edu.ifal.meetingbook.entities.user.UserModel;
 
 @Component
 public class DataInitializer implements CommandLineRunner { // Permite executar código durante a inicialização do app

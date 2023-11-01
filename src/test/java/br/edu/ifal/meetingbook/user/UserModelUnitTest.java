@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import br.edu.ifal.meetingbook.entities.user.UserModel;
+
 public class UserModelUnitTest {
     
     @Test
