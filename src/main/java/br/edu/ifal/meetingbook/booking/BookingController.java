@@ -39,8 +39,8 @@ public class BookingController {
     public ResponseEntity<Object> create(@RequestBody BookingModel bookingModel) {
         var booking = this.bookingRepository.findByBookingNumber(bookingModel.getBookingNumber());   
         
-        if(booking == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Reserva não existe");
+        if(booking != null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Reserva já existe");
         }
         
         if(bookingModel.getRoomId() == null) {
