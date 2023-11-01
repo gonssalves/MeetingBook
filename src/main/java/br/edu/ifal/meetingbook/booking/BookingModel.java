@@ -24,4 +24,7 @@ public class BookingModel {
     
     private UUID userId;
     private UUID roomId;
+
+    public BookingModel() {
+    }
 }
