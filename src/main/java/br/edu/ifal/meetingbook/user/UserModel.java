@@ -1,16 +1,12 @@
 package br.edu.ifal.meetingbook.user;
 
-import java.util.List;
 import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import lombok.Data;
-
-import br.edu.ifal.meetingbook.booking.BookingModel;
 
 /**
  * Esta classe representa um usuário no sistema.
@@ -37,10 +33,7 @@ public class UserModel {
     private String email;
     private String password;
     private String type;
-
-    @OneToMany(mappedBy = "user")
-    private List<BookingModel> bookings;
-    
+  
     /**
      * Construtor da classe UserModel.
      *

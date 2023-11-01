@@ -54,8 +54,7 @@ public class BookingController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Sala da reserva não existe");
         }   
         
-        UserModel user = bookingModel.getUser();
-        UUID userId = user.getId();
+        UUID userId = bookingModel.getUserId();
 
         var bookingUser = this.userRepository.findById(userId);
 
@@ -71,7 +70,6 @@ public class BookingController {
         */
 
         List<BookingModel> bookingList = this.bookingRepository.findByBookingDate((bookingModel.getBookingDate()));
-        System.out.println("##############################################" + bookingList);
 
         var bookingCreated = this.bookingRepository.save(bookingModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(bookingCreated);
