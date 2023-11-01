@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import br.edu.ifal.meetingbook.meetingroom.IRoomRepository;
 import br.edu.ifal.meetingbook.resource.ResourceModel;
 import br.edu.ifal.meetingbook.user.IUserRepository;
-import br.edu.ifal.meetingbook.user.UserModel;
 import br.edu.ifal.meetingbook.utils.Utils;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -65,11 +64,19 @@ public class BookingController {
         /*
          * POSSÍVEIS CONFLITOS NO HORÁRIO DA RESERVA
          * Listar reservas por data V
-         * Verificar horário de início e fim
-         * Verificar status da reserva
+         * Verificar status da reserva V
+         * Verificar horário de início e fim V
         */
-
+        
         List<BookingModel> bookingList = this.bookingRepository.findByBookingDate((bookingModel.getBookingDate()));
+
+        for(BookingModel bookingItem : bookingList) {
+            if(bookingItem.getBookingStatus() != "Cancelada") {
+                if(bookingItem.getBookingStartTime() == bookingModel.getBookingStartTime() || bookingItem.getBookingEndTime() == bookingModel.getBookingEndTime()) {
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Horário indisponível");
+                }  
+            }
+        }
 
         var bookingCreated = this.bookingRepository.save(bookingModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(bookingCreated);
