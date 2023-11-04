@@ -34,66 +34,17 @@ public class BookingController {
     @Autowired
     private IUserRepository userRepository;
     
+    @Autowired
+    private BookingService bookingService;
 
     @PostMapping("/")
     public ResponseEntity<Object> create(@RequestBody BookingModel bookingModel) {
-        var booking = this.bookingRepository.findByBookingNumber(bookingModel.getBookingNumber());   
-        
-        if(booking != null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Reserva já existe");
+        try {
+            BookingModel createdBooking = bookingService.createBooking(bookingModel);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdBooking);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
-        
-        if(bookingModel.getRoomId() == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Sala não informada");
-        }
-        
-        var bookingRoom = this.roomRepository.findById(bookingModel.getRoomId());
-        
-        if(bookingRoom == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Sala da reserva não existe");
-        }   
-        
-        // UserModel user = bookingModel.getUser();
-        // UUID userId = user.getId();
-
-        UUID userId = bookingModel.getUserId();
-        
-        var bookingUser = this.userRepository.findById(userId);
-
-        if(bookingUser == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário dono da reserva não existe");
-        }
-        
-        int startTime = bookingModel.getBookingStartTime();
-        int endTime = bookingModel.getBookingEndTime();
-
-        if(startTime < 0000 || startTime > 2359 || endTime < 0000 || endTime > 2359) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Horário inválido");
-        }
-
-        if(startTime > endTime) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Horário de início não pode ser maior que o horário de fim");
-        }
-
-        /*
-         * POSSÍVEIS CONFLITOS NO HORÁRIO DA RESERVA
-         * Listar reservas por data V
-         * Verificar status da reserva V
-         * Verificar horário de início e fim V
-        */
-        
-        List<BookingModel> bookingList = this.bookingRepository.findByBookingDate((bookingModel.getBookingDate()));
-
-        for(BookingModel bookingItem : bookingList) {
-            if(bookingItem.getBookingStatus() != "Cancelada") {
-                if(bookingItem.getBookingStartTime() == bookingModel.getBookingStartTime() || bookingItem.getBookingEndTime() == bookingModel.getBookingEndTime()) {
-                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Horário indisponível");
-                }  
-            }
-        }
-
-        var bookingCreated = this.bookingRepository.save(bookingModel);
-        return ResponseEntity.status(HttpStatus.CREATED).body(bookingCreated);
     }
 
     @GetMapping("/")
