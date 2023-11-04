@@ -2,13 +2,10 @@ package br.edu.ifal.meetingbook.entities.booking;
 
 import java.util.UUID;
 
-import br.edu.ifal.meetingbook.entities.user.UserModel;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
 @Data
@@ -26,9 +23,12 @@ public class BookingModel {
     private float bookingPrice;
     private String bookingStatus; // "Pendente", "Confirmada", "Cancelada"
     
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private UserModel user;
+    // @ManyToOne
+    // @JoinColumn(name = "user_id", referencedColumnName = "id")
+    // private UserModel user;
+
+    @Column(name = "user_id")
+    private UUID userId;
     
     @Column(name = "room_id")
     private UUID roomId;

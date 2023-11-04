@@ -1,16 +1,11 @@
 package br.edu.ifal.meetingbook.entities.user;
 
-import java.util.List;
 import java.util.UUID;
 
-import br.edu.ifal.meetingbook.entities.booking.BookingModel;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import lombok.Data;
 
 /**
@@ -39,8 +34,8 @@ public class UserModel {
     private String password;
     private String type;
     
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<BookingModel> bookings;
+    // @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    // private List<BookingModel> bookings;
     
     /**
      * Construtor da classe UserModel.
