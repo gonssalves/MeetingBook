@@ -85,7 +85,7 @@ public class DataInitializer implements CommandLineRunner { // Permite executar 
                 UserModel user = this.userRepository.findByUsername("admin");
     
                 booking.setRoomId(room.getId());
-                booking.setUserId(user.getId());
+                booking.setUser(user);
     
                 bookingRepository.save(booking);
 
@@ -99,7 +99,7 @@ public class DataInitializer implements CommandLineRunner { // Permite executar 
                 booking1.setBookingStatus("Confirmado");
                     
                 booking1.setRoomId(room.getId());
-                booking1.setUserId(user.getId());
+                booking1.setUser(user);
     
                 bookingRepository.save(booking1);
             }
