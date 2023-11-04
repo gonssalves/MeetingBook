@@ -15,9 +15,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+<<<<<<< Updated upstream:src/main/java/br/edu/ifal/meetingbook/booking/BookingController.java
 import br.edu.ifal.meetingbook.meetingroom.IRoomRepository;
 import br.edu.ifal.meetingbook.resource.ResourceModel;
 import br.edu.ifal.meetingbook.user.IUserRepository;
+=======
+import br.edu.ifal.meetingbook.entities.meetingroom.IRoomRepository;
+import br.edu.ifal.meetingbook.entities.resource.ResourceModel;
+import br.edu.ifal.meetingbook.entities.user.IUserRepository;
+import br.edu.ifal.meetingbook.entities.user.UserModel;
+>>>>>>> Stashed changes:src/main/java/br/edu/ifal/meetingbook/entities/booking/BookingController.java
 import br.edu.ifal.meetingbook.utils.Utils;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -53,7 +60,8 @@ public class BookingController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Sala da reserva não existe");
         }   
         
-        UUID userId = bookingModel.getUserId();
+        UserModel user = bookingModel.getUser();
+        UUID userId = user.getId();
 
         var bookingUser = this.userRepository.findById(userId);
 
