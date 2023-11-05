@@ -1,7 +1,6 @@
 package br.edu.ifal.meetingbook.entities.booking;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +47,7 @@ public class BookingController {
     @GetMapping("/{id}")
     public ResponseEntity<Object> listOne(@PathVariable UUID id) {
         try {
-            Optional<BookingModel> booking = bookingService.listOneBooking(id);
+            BookingModel booking = bookingService.listOneBooking(id);
             return ResponseEntity.ok().body(booking);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
