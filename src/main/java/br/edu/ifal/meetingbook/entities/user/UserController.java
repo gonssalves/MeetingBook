@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import at.favre.lib.crypto.bcrypt.BCrypt;
 import br.edu.ifal.meetingbook.utils.Utils;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -26,23 +25,18 @@ public class UserController {
     @Autowired
     private IUserRepository userRepository;
 
+    @Autowired
+    private UserService userService;
+
     // Endpoint para criar um novo usuário
     @PostMapping("/")
     public ResponseEntity<Object> create(@RequestBody UserModel userModel) {
-        // Verifique se o usuário já existe no banco de dados.
-        var user = this.userRepository.findByEmail(userModel.getEmail());
-        
-        if (user != null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuário já existe");
+        try {
+            UserModel user = userService.createUser(userModel);
+            return ResponseEntity.ok().body(user);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
-
-        // Realize o hash da senha do usuário antes de armazená-lo no banco de dados.
-        var passwordHashed = BCrypt.withDefaults().hashToString(12, userModel.getPassword().toCharArray());
-
-        userModel.setPassword(passwordHashed);
-        // Salve o novo usuário no banco de dados.
-        var userCreated = this.userRepository.save(userModel);
-        return ResponseEntity.status(HttpStatus.CREATED).body(userCreated);
     }
 
     // Endpoint para listar todos os usuários
@@ -55,13 +49,12 @@ public class UserController {
     // Endpoint para listar um único usuário por ID
     @GetMapping("/{id}")
     public ResponseEntity<Object> listOne(@PathVariable UUID id) {
-        var user = userRepository.findById(id);
-
-        if (user == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
+        try {
+            var user = userService.listOneUser(id);
+            return ResponseEntity.ok().body(user);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
-
-        return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 
     @PutMapping("/{id}")
