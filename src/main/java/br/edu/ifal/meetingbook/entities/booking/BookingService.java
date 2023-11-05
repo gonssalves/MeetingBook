@@ -1,7 +1,6 @@
 package br.edu.ifal.meetingbook.entities.booking;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,7 @@ public class BookingService {
     private IRoomRepository roomRepository;
 
     public BookingModel createOrUpdateBooking(BookingModel bookingModel) throws Exception {
-        var booking = this.bookingRepository.findById(bookingModel.getId());
+        var booking = this.bookingRepository.findById(bookingModel.getId()).orElse(null);
         
         if (booking != null) {
             throw new Exception("Já existe uma reserva com este ID.");
@@ -33,7 +32,7 @@ public class BookingService {
             throw new Exception("O ID da sala não pode ser nulo.");
         }
 
-        var room = this.roomRepository.findById(bookingModel.getRoomId());
+        var room = this.roomRepository.findById(bookingModel.getRoomId()).orElse(null);
 
         if (room == null) {
             throw new Exception("Sala de reserva informada não existe.");
@@ -44,7 +43,7 @@ public class BookingService {
 
         UUID userId = bookingModel.getUserId();
         
-        var bookingUser = this.userRepository.findById(userId);
+        var bookingUser = this.userRepository.findById(userId).orElse(null);
 
         if (bookingUser == null) {
             throw new Exception("Usuário dono da reserva não existe.");
@@ -81,10 +80,10 @@ public class BookingService {
         return this.bookingRepository.save(bookingModel);
     }
 
-    public Optional<BookingModel> listOneBooking(UUID id) throws Exception{
-        Optional<BookingModel> booking = this.bookingRepository.findById(id);
+    public BookingModel listOneBooking(UUID id) throws Exception{
+        var booking = this.bookingRepository.findById(id).orElse(null);
         
-        if (!booking.isPresent()) {
+        if (booking == null) {
             throw new Exception("Reserva informada não foi encontrada.");
         }
 
