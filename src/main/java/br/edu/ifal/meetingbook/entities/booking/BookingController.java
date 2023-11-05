@@ -1,6 +1,7 @@
 package br.edu.ifal.meetingbook.entities.booking;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.edu.ifal.meetingbook.entities.meetingroom.IRoomRepository;
 import br.edu.ifal.meetingbook.entities.resource.ResourceModel;
-import br.edu.ifal.meetingbook.entities.user.IUserRepository;
 import br.edu.ifal.meetingbook.utils.Utils;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -28,12 +27,6 @@ public class BookingController {
     @Autowired
     private IBookingRepository bookingRepository;
 
-    @Autowired
-    private IRoomRepository roomRepository;
-
-    @Autowired
-    private IUserRepository userRepository;
-    
     @Autowired
     private BookingService bookingService;
 
@@ -55,13 +48,12 @@ public class BookingController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> listOne(@PathVariable UUID id) {
-        var booking = bookingRepository.findById(id);
-        
-        if (booking == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Reserva não encontrada");
+        try {
+            Optional<BookingModel> booking = bookingService.listOneBookingModel(id);
+            return ResponseEntity.ok().body(booking);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
-
-        return ResponseEntity.status(HttpStatus.OK).body(booking);
     }    
 
     @PutMapping("/{id}")
