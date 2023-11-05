@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.edu.ifal.meetingbook.entities.resource.ResourceModel;
 import br.edu.ifal.meetingbook.utils.Utils;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -71,19 +70,17 @@ public class BookingController {
     @DeleteMapping("/")
     public ResponseEntity<Void> deleteAll() {
         bookingRepository.deleteAll();
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build(); // Resposta sem corpo
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteOne(@PathVariable UUID id) {
-        var booking = bookingRepository.findById(id);
-    
-        if (booking == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Reserva não encontrada");
+        try {
+            bookingService.deleteOneBooking(id);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
-    
-        bookingRepository.deleteById(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
-    
+
 }
