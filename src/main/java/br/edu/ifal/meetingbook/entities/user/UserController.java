@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.edu.ifal.meetingbook.entities.booking.BookingModel;
 import br.edu.ifal.meetingbook.utils.Utils;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -32,7 +33,7 @@ public class UserController {
     @PostMapping("/")
     public ResponseEntity<Object> create(@RequestBody UserModel userModel) {
         try {
-            UserModel user = userService.createUser(userModel);
+            UserModel user = userService.createOrUpdateUser(userModel);
             return ResponseEntity.ok().body(user);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
@@ -58,19 +59,15 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> update(@RequestBody UserModel toBeUpdatedUser, HttpServletRequest request, @PathVariable UUID id) {
-        var user = this.userRepository.findById(id).orElse(null);
-
-        System.out.println(request);
-
-        if(user == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Recurso não encontrado");
+    public ResponseEntity<Object> update(@RequestBody UserModel sourceUser, HttpServletRequest request, @PathVariable UUID id) {
+        try {
+            UserModel targetUser = userService.createOrUpdateUser(sourceUser);
+            Utils.copyNonNullProperties(sourceUser, targetUser);
+            var userUpdated = this.userRepository.save(targetUser);
+            return ResponseEntity.ok().body(userUpdated);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
-        
-        Utils.copyNonNullProperties(toBeUpdatedUser, user);
-        var resourceUpdated = this.userRepository.save(user);
-
-        return ResponseEntity.ok().body(resourceUpdated);
     } 
 
     // Endpoint para excluir todos os usuários
@@ -83,13 +80,11 @@ public class UserController {
     // Endpoint para excluir um usuário por ID
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteOne(@PathVariable UUID id) {
-        var user = userRepository.findById(id);
-    
-        if (user == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
+        try {
+            userService.deleteUser(id);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
-    
-        userRepository.deleteById(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
