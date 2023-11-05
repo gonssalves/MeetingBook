@@ -5,8 +5,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import br.edu.ifal.meetingbook.entities.meetingroom.IRoomRepository;
@@ -24,7 +22,7 @@ public class BookingService {
     @Autowired
     private IRoomRepository roomRepository;
 
-    public BookingModel createBooking(BookingModel bookingModel) throws Exception {
+    public BookingModel createOrUpdateBooking(BookingModel bookingModel) throws Exception {
         var booking = this.bookingRepository.findById(bookingModel.getId());
         
         if (booking != null) {
@@ -83,7 +81,7 @@ public class BookingService {
         return this.bookingRepository.save(bookingModel);
     }
 
-    public Optional<BookingModel> listOneBookingModel(UUID id) throws Exception{
+    public Optional<BookingModel> listOneBooking(UUID id) throws Exception{
         Optional<BookingModel> booking = this.bookingRepository.findById(id);
         
         if (!booking.isPresent()) {
