@@ -33,7 +33,7 @@ public class BookingController {
     @PostMapping("/")
     public ResponseEntity<Object> create(@RequestBody BookingModel bookingModel) {
         try {
-            BookingModel createdBooking = bookingService.createBooking(bookingModel);
+            BookingModel createdBooking = bookingService.createOrUpdateBooking(bookingModel);
             return ResponseEntity.status(HttpStatus.CREATED).body(createdBooking);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
@@ -49,7 +49,7 @@ public class BookingController {
     @GetMapping("/{id}")
     public ResponseEntity<Object> listOne(@PathVariable UUID id) {
         try {
-            Optional<BookingModel> booking = bookingService.listOneBookingModel(id);
+            Optional<BookingModel> booking = bookingService.listOneBooking(id);
             return ResponseEntity.ok().body(booking);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
@@ -57,19 +57,15 @@ public class BookingController {
     }    
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> update(@RequestBody ResourceModel toBeUpdatedBooking, HttpServletRequest request, @PathVariable UUID id) {
-        var booking = this.bookingRepository.findById(id).orElse(null);
-
-        System.out.println(request);
-
-        if(booking == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Reserva não encontrada");
+    public ResponseEntity<Object> update(@RequestBody BookingModel sourceBooking, HttpServletRequest request, @PathVariable UUID id) {
+        try {
+            BookingModel targetBooking = bookingService.createOrUpdateBooking(sourceBooking);
+            Utils.copyNonNullProperties(sourceBooking, targetBooking);
+            var bookingUpdated = this.bookingRepository.save(targetBooking);
+            return ResponseEntity.ok().body(bookingUpdated);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
-        
-        Utils.copyNonNullProperties(toBeUpdatedBooking, booking);
-        var bookingUpdated = this.bookingRepository.save(booking);
-
-        return ResponseEntity.ok().body(bookingUpdated);
     } 
 
     @DeleteMapping("/")
