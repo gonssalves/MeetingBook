@@ -1,9 +1,12 @@
 package br.edu.ifal.meetingbook.entities.booking;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import br.edu.ifal.meetingbook.entities.meetingroom.IRoomRepository;
@@ -78,5 +81,15 @@ public class BookingService {
         }
 
         return this.bookingRepository.save(bookingModel);
+    }
+
+    public Optional<BookingModel> listOneBookingModel(UUID id) throws Exception{
+        Optional<BookingModel> booking = this.bookingRepository.findById(id);
+        
+        if (!booking.isPresent()) {
+            throw new Exception("Reserva informada não foi encontrada.");
+        }
+
+        return booking;
     }
 }
