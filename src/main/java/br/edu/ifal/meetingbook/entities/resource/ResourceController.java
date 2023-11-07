@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.ifal.meetingbook.entities.meetingroom.IRoomRepository;
+import br.edu.ifal.meetingbook.entities.user.UserModel;
 import br.edu.ifal.meetingbook.utils.Utils;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -29,22 +30,17 @@ public class ResourceController {
     @Autowired
     private IRoomRepository roomRepository;
 
+    @Autowired
+    private ResourceService resourceService;
+
     @PostMapping("/")
     public ResponseEntity<Object> create(@RequestBody ResourceModel resourceModel) {
-        var resource = this.resourceRepository.findByResourceNumber(resourceModel.getResourceNumber());
-
-        if(resource != null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Recurso já existe");
+        try {
+            ResourceModel createdResource = resourceService.createOrUpdateResource(resourceModel);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdResource);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
-
-        var resourceRoom = this.roomRepository.findById(resourceModel.getRoomID());
-
-        if(resourceRoom == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Sala que contém o recurso não existe");
-        }
-
-        var resourceCreated = this.resourceRepository.save(resourceModel);
-        return ResponseEntity.status(HttpStatus.CREATED).body(resourceCreated);
     } 
 
     @GetMapping("/")
@@ -55,29 +51,24 @@ public class ResourceController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> listOne(@PathVariable UUID id) {
-        var resource = resourceRepository.findById(id);
-        
-        if (resource == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Recurso não encontrado");
+        try {
+            var resource = resourceService.listOneResource(id);
+            return ResponseEntity.ok().body(resource);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
-
-        return ResponseEntity.status(HttpStatus.OK).body(resource);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> update(@RequestBody ResourceModel toBeUpdatedResource, HttpServletRequest request, @PathVariable UUID id) {
-        var resource = this.resourceRepository.findById(id).orElse(null);
-
-        System.out.println(request);
-
-        if(resource == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Recurso não encontrado");
+    public ResponseEntity<Object> update(@RequestBody ResourceModel sourceResource, HttpServletRequest request, @PathVariable UUID id) {
+        try {
+            ResourceModel targetResource = resourceService.createOrUpdateResource(sourceResource);
+            Utils.copyNonNullProperties(sourceResource, targetResource);
+            var resourceUpdated = this.resourceRepository.save(targetResource);
+            return ResponseEntity.ok().body(resourceUpdated);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
-        
-        Utils.copyNonNullProperties(toBeUpdatedResource, resource);
-        var resourceUpdated = this.resourceRepository.save(resource);
-
-        return ResponseEntity.ok().body(resourceUpdated);
     }    
 
      @DeleteMapping("/")
@@ -89,13 +80,11 @@ public class ResourceController {
     // Endpoint para excluir um usuário por ID
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteOne(@PathVariable UUID id) {
-        var resource = resourceRepository.findById(id);
-    
-        if (resource == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Recurso não encontrado");
+        try {
+            resourceService.deleteOneResource(id);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
-    
-        resourceRepository.deleteById(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
