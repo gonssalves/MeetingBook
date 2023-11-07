@@ -27,16 +27,17 @@ public class RoomController {
     @Autowired
     private IRoomRepository roomRepository;
 
+    @Autowired
+    private RoomService roomService;
+
     @PostMapping("/")
     public ResponseEntity<Object> create(@RequestBody RoomModel roomModel) {
-        var room = this.roomRepository.findByRoomNumber(roomModel.getRoomNumber());
-
-        if(room != null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Sala de reunião ");
+        try {
+            RoomModel createdRoom = roomService.createOrUpdateRoom(roomModel, "POST");
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdRoom);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
-
-        var roomCreated = this.roomRepository.save(roomModel);
-        return ResponseEntity.status(HttpStatus.CREATED).body(roomCreated);
     }
 
    @GetMapping("/")
@@ -47,29 +48,24 @@ public class RoomController {
 
      @GetMapping("/{id}")
     public ResponseEntity<Object> listOne(@PathVariable UUID id) {
-        var room = roomRepository.findById(id);
-        
-        if (room == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Sala não encontrada");
+        try {
+            var room = roomService.listOneRoom(id);
+            return ResponseEntity.ok().body(room);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
-
-        return ResponseEntity.status(HttpStatus.OK).body(room);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> update(@RequestBody RoomModel toBeUpdatedroom, HttpServletRequest request, @PathVariable UUID id) {
-        var room = this.roomRepository.findById(id).orElse(null);
-
-        System.out.println(request);
-
-        if(room == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Sala não encontrada");
+    public ResponseEntity<Object> update(@RequestBody RoomModel sourceRoom, HttpServletRequest request, @PathVariable UUID id) {
+        try {
+            RoomModel targetRoom = roomService.createOrUpdateRoom(sourceRoom, "PUT");
+            Utils.copyNonNullProperties(sourceRoom, targetRoom);
+            var roomUpdated = this.roomRepository.save(targetRoom);
+            return ResponseEntity.ok().body(roomUpdated);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
-        
-        Utils.copyNonNullProperties(toBeUpdatedroom, room);
-        var roomUpdated = this.roomRepository.save(room);
-
-        return ResponseEntity.ok().body(roomUpdated);
     }   
 
     @DeleteMapping("/")
@@ -80,14 +76,12 @@ public class RoomController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteOne(@PathVariable UUID id) {
-        var room = roomRepository.findById(id);
-    
-        if (room == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Sala não encontrada");
+        try {
+            roomService.deleteOneRoom(id);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());// Resposta sem corpo
         }
-    
-        roomRepository.deleteById(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build(); // Resposta sem corpo
     }
     
 }
