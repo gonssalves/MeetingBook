@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.edu.ifal.meetingbook.entities.meetingroom.IRoomRepository;
-import br.edu.ifal.meetingbook.entities.user.UserModel;
 
 @Service
 public class ResourceService {
