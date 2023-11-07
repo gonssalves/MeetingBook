@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.edu.ifal.meetingbook.entities.meetingroom.IRoomRepository;
-import br.edu.ifal.meetingbook.entities.user.UserModel;
 import br.edu.ifal.meetingbook.utils.Utils;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -26,9 +24,6 @@ public class ResourceController {
     
     @Autowired
     private IResourceRepository resourceRepository;
-
-    @Autowired
-    private IRoomRepository roomRepository;
 
     @Autowired
     private ResourceService resourceService;
