@@ -1,16 +1,23 @@
 package br.edu.ifal.meetingbook.entities.user;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
+import br.edu.ifal.meetingbook.entities.booking.BookingModel;
+import br.edu.ifal.meetingbook.entities.booking.IBookingRepository;
+import br.edu.ifal.meetingbook.entities.meetingroom.RoomModel;
 
 @Service
 public class UserService {
     @Autowired
     private IUserRepository userRepository;
+
+    @Autowired
+    private IBookingRepository bookingRepository;
 
     private String validateUserFields(UserModel userModel) throws Exception{
         if (userModel == null) {
@@ -66,6 +73,18 @@ public class UserService {
         }
 
         this.userRepository.delete(user);
+    }
+
+    public List<BookingModel> listUserBookings(UUID userId) throws Exception{
+        UserModel user = this.userRepository.findById(userId).orElse(null);
+
+        if (user == null) {
+            throw new Exception("Usuário não encontrado");
+        }
+
+        List<BookingModel> bookings = this.bookingRepository.findByUserId(userId);
+
+        return bookings;
     }
 
 }

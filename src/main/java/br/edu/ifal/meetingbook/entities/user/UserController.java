@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.edu.ifal.meetingbook.entities.meetingroom.RoomModel;
 import br.edu.ifal.meetingbook.utils.Utils;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -82,6 +83,16 @@ public class UserController {
         try {
             userService.deleteUser(id);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/{userId}/bookings/")
+    public ResponseEntity<Object> listBooking(@PathVariable UUID userId) {
+        try {
+            var bookings = userService.listUserBookings(userId);
+            return ResponseEntity.ok().body(bookings);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
