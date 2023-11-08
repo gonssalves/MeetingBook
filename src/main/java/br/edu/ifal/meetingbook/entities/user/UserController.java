@@ -32,7 +32,7 @@ public class UserController {
     @PostMapping("/")
     public ResponseEntity<Object> create(@RequestBody UserModel userModel) {
         try {
-            UserModel user = userService.createOrUpdateUser(userModel);
+            UserModel user = userService.createOrUpdateUser(userModel, "POST");
             return ResponseEntity.ok().body(user);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
@@ -60,7 +60,7 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<Object> update(@RequestBody UserModel sourceUser, HttpServletRequest request, @PathVariable UUID id) {
         try {
-            UserModel targetUser = userService.createOrUpdateUser(sourceUser);
+            UserModel targetUser = userService.createOrUpdateUser(sourceUser, "PUT");
             Utils.copyNonNullProperties(sourceUser, targetUser);
             var userUpdated = this.userRepository.save(targetUser);
             return ResponseEntity.ok().body(userUpdated);

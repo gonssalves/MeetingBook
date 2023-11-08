@@ -37,13 +37,15 @@ public class UserService {
         return null; // Retorna null se todos os campos estiverem preenchidos corretamente
     }
 
-    public UserModel createOrUpdateUser(UserModel userModel) throws Exception{
+    public UserModel createOrUpdateUser(UserModel userModel, String methodHttp) throws Exception{
         validateUserFields(userModel);
 
         var user = this.userRepository.findByEmail(userModel.getEmail()); // Verifica se o usuário já existe no banco de dados.
         
-        if (user != null) {
+        if (methodHttp == "POST" && user != null) {
             throw new Exception("O usuário informado já existe");
+        } else if (methodHttp == "PUT" && user == null) {
+            throw new Exception("Usuário não existe não existe");
         }
 
         // Realize o hash da senha do usuário antes de armazená-lo no banco de dados.

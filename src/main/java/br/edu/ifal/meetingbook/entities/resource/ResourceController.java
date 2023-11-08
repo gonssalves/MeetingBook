@@ -31,7 +31,7 @@ public class ResourceController {
     @PostMapping("/")
     public ResponseEntity<Object> create(@RequestBody ResourceModel resourceModel) {
         try {
-            ResourceModel createdResource = resourceService.createOrUpdateResource(resourceModel);
+            ResourceModel createdResource = resourceService.createOrUpdateResource(resourceModel, "POST");
             return ResponseEntity.status(HttpStatus.CREATED).body(createdResource);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
@@ -57,7 +57,7 @@ public class ResourceController {
     @PutMapping("/{id}")
     public ResponseEntity<Object> update(@RequestBody ResourceModel sourceResource, HttpServletRequest request, @PathVariable UUID id) {
         try {
-            ResourceModel targetResource = resourceService.createOrUpdateResource(sourceResource);
+            ResourceModel targetResource = resourceService.createOrUpdateResource(sourceResource, "PUT");
             Utils.copyNonNullProperties(sourceResource, targetResource);
             var resourceUpdated = this.resourceRepository.save(targetResource);
             return ResponseEntity.ok().body(resourceUpdated);

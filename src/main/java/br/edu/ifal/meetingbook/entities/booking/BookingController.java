@@ -31,7 +31,7 @@ public class BookingController {
     @PostMapping("/")
     public ResponseEntity<Object> create(@RequestBody BookingModel bookingModel) {
         try {
-            BookingModel createdBooking = bookingService.createOrUpdateBooking(bookingModel);
+            BookingModel createdBooking = bookingService.createOrUpdateBooking(bookingModel, "POST");
             return ResponseEntity.status(HttpStatus.CREATED).body(createdBooking);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
@@ -57,7 +57,7 @@ public class BookingController {
     @PutMapping("/{id}")
     public ResponseEntity<Object> update(@RequestBody BookingModel sourceBooking, HttpServletRequest request, @PathVariable UUID id) {
         try {
-            BookingModel targetBooking = bookingService.createOrUpdateBooking(sourceBooking);
+            BookingModel targetBooking = bookingService.createOrUpdateBooking(sourceBooking, "PUT");
             Utils.copyNonNullProperties(sourceBooking, targetBooking);
             var bookingUpdated = this.bookingRepository.save(targetBooking);
             return ResponseEntity.ok().body(bookingUpdated);

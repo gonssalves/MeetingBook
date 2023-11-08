@@ -21,11 +21,13 @@ public class BookingService {
     @Autowired
     private IRoomRepository roomRepository;
 
-    public BookingModel createOrUpdateBooking(BookingModel bookingModel) throws Exception {
+    public BookingModel createOrUpdateBooking(BookingModel bookingModel, String methodHttp) throws Exception {
         var booking = this.bookingRepository.findById(bookingModel.getId()).orElse(null);
         
-        if (booking != null) {
-            throw new Exception("Já existe uma reserva com este ID.");
+        if (methodHttp == "POST" && booking != null) {
+            throw new Exception("Já existe uma reserva com esse ID");
+        } else if (methodHttp == "PUT" && booking == null) {
+            throw new Exception("Reserva não existe");
         }
 
         if (bookingModel.getRoomId() == null) {

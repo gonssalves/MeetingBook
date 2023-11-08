@@ -28,11 +28,13 @@ public class ResourceService {
         return null; // Retorna null se todos os campos estiverem preenchidos corretamente
     }
 
-    public ResourceModel createOrUpdateResource(ResourceModel resourceModel) throws Exception{
+    public ResourceModel createOrUpdateResource(ResourceModel resourceModel, String methodHttp) throws Exception{
         var resource = this.resourceRepository.findByResourceNumber(resourceModel.getResourceNumber());
 
-        if(resource != null) {
+        if (methodHttp == "POST" && resource != null) {
             throw new Exception("Recurso já existe");
+        } else if (methodHttp == "PUT" && resource == null) {
+            throw new Exception("Recurso não existe");
         }
 
         validateResourceFields(resourceModel);
