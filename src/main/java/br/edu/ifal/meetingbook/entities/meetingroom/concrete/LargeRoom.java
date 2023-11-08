@@ -12,25 +12,16 @@ public class LargeRoom extends RoomModel{
 
     @Override
     public boolean hasVideoConference() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'hasVideoConference'");
+        return true;
     }
 
     @Override
     public boolean hasCoffeMachine() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'hasCoffeMachine'");
+        return true;
     }
 
     @Override
     public int numOfComputers() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'numOfComputers'");
-    }
-
-    @Override
-    public int listResources() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'listResources'");
+        return 10;
     }
 }

@@ -1,7 +1,9 @@
 package br.edu.ifal.meetingbook.entities.meetingroom;
 
+import java.util.List;
 import java.util.UUID;
 
+import br.edu.ifal.meetingbook.entities.resource.ResourceModel;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -45,7 +47,5 @@ public abstract class RoomModel {
     public abstract boolean hasCoffeMachine();
 
     public abstract int numOfComputers();
-
-    public abstract int listResources();
 
 }
