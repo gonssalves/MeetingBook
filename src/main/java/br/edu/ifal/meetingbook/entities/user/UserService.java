@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import br.edu.ifal.meetingbook.entities.booking.BookingModel;
 import br.edu.ifal.meetingbook.entities.booking.IBookingRepository;
-import br.edu.ifal.meetingbook.entities.meetingroom.RoomModel;
 
 @Service
 public class UserService {

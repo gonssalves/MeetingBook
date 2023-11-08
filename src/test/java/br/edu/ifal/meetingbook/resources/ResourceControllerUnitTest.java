@@ -15,9 +15,9 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import br.edu.ifal.meetingbook.resource.IResourceRepository;
-import br.edu.ifal.meetingbook.resource.ResourceController;
-import br.edu.ifal.meetingbook.resource.ResourceModel;
+import br.edu.ifal.meetingbook.entities.resource.IResourceRepository;
+import br.edu.ifal.meetingbook.entities.resource.ResourceController;
+import br.edu.ifal.meetingbook.entities.resource.ResourceModel;
 
 public class ResourceControllerUnitTest {
 

@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import br.edu.ifal.meetingbook.resource.ResourceModel;
+import br.edu.ifal.meetingbook.entities.resource.ResourceModel;
 
 public class ResourceModelUnitTest {
     
