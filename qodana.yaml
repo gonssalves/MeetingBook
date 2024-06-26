@@ -1,9 +1,7 @@
 version: "1.0"
-linter: jetbrains/qodana-cdnet:latest
+linter: jetbrains/qodana-jvm-community:2023.3
 include:
   - name: CommentedOutCode
   - name: UnnecessaryLocalVariable
   - name: OptionalAssignedToNull
-with:
-  pr-mode: false
-  args: --save-report=false
+
