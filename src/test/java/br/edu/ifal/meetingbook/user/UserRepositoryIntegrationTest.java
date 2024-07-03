@@ -22,7 +22,7 @@ public class UserRepositoryIntegrationTest {
     private IUserRepository userRepository;
 
     @Test
-    @Rollback(false) // Desfaz as alterações no banco de dados após o teste
+    @Rollback(true) // Desfaz as alterações no banco de dados após o teste
     public void testFindByEmail() {
         // Crie um usuário de exemplo e persista-o no banco de dados
         UserModel user = new UserModel("Mr Test", "test", "test@gmail.com", "1234", "Cliente");
@@ -37,7 +37,7 @@ public class UserRepositoryIntegrationTest {
     }
 
     @Test
-    @Rollback(false)
+    @Rollback(true)
     public void testFindByUsername() {
         UserModel user = new UserModel("Mr Test", "test", "test@gmail.com", "1234", "Cliente");
         entityManager.persist(user);
