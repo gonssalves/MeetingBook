@@ -1,9 +1,7 @@
 package br.edu.ifal.meetingbook.entities.meetingroom;
 
-import java.util.List;
 import java.util.UUID;
 
-import br.edu.ifal.meetingbook.entities.resource.ResourceModel;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
