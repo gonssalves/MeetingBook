@@ -38,10 +38,10 @@ public class RoomService {
 
         var roomRoom = this.roomRepository.findById(roomModel.getId());
 
-        if(roomRoom == null) {
+        if(roomRoom.isEmpty()) {
             throw new Exception("Sala que contém o recurso não existe");
         }
-
+        
         return this.roomRepository.save(roomModel);
                 
     }

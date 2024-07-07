@@ -41,7 +41,7 @@ public class ResourceService {
 
         var resourceRoom = this.roomRepository.findById(resourceModel.getRoomID());
 
-        if(resourceRoom == null) {
+        if(resourceRoom.isEmpty()) {
             throw new Exception("Sala que contém o recurso não existe");
         }
 
