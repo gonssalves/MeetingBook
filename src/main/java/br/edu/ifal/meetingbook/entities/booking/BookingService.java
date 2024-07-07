@@ -54,7 +54,7 @@ public class BookingService {
         int startTime = bookingModel.getBookingStartTime();
         int endTime = bookingModel.getBookingEndTime();
 
-        if(startTime < 0000 || startTime > 2359 || endTime < 0000 || endTime > 2359) {
+        if(startTime < 0 || startTime > 2359 || endTime < 0 || endTime > 2359) {
             throw new Exception("Horário inválido");
         }
 
