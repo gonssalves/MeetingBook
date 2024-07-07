@@ -42,9 +42,9 @@ public class UserService {
 
         var user = this.userRepository.findByEmail(userModel.getEmail()); // Verifica se o usuário já existe no banco de dados.
         
-        if (methodHttp == "POST" && user != null) {
+        if (methodHttp.equals("POST") && user != null) {
             throw new Exception("O usuário informado já existe");
-        } else if (methodHttp == "PUT" && user == null) {
+        } else if (methodHttp.equals("PUT") && user == null) {
             throw new Exception("Usuário não existe não existe");
         }
 
