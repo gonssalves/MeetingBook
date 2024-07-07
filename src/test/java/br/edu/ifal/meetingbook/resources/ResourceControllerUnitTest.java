@@ -1,30 +1,18 @@
 package br.edu.ifal.meetingbook.resources;
 
-<<<<<<< HEAD
-import static org.junit.Assert.assertEquals;
-=======
 import static org.junit.jupiter.api.Assertions.assertEquals;
->>>>>>> inss
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-<<<<<<< HEAD
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-=======
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
->>>>>>> inss
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -32,10 +20,7 @@ import br.edu.ifal.meetingbook.entities.resource.IResourceRepository;
 import br.edu.ifal.meetingbook.entities.resource.ResourceController;
 import br.edu.ifal.meetingbook.entities.resource.ResourceModel;
 
-<<<<<<< HEAD
-=======
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
->>>>>>> inss
 public class ResourceControllerUnitTest {
 
     @InjectMocks
@@ -44,31 +29,12 @@ public class ResourceControllerUnitTest {
     @Mock
     private IResourceRepository resourceRepository;
 
-<<<<<<< HEAD
-    @Before
-=======
     @BeforeEach
->>>>>>> inss
     public void init() {
         MockitoAnnotations.openMocks(this);
     }
 
-<<<<<<< HEAD
-    @Test
-    public void testCreateResource() {
-        ResourceModel resource = new ResourceModel();
-        resource.setResourceNumber(1);
-        resource.setResourceName("Projector");
-        resource.setResourceType("Electronic");
-
-        when(resourceRepository.save(resource)).thenReturn(resource);
-
-        ResponseEntity<Object> response = resourceController.create(resource);
-        assertEquals(HttpStatus.CREATED, response.getStatusCode());
-    }
-=======
     //      
->>>>>>> inss
 
     @Test
     public void testListAllResources() {
@@ -91,44 +57,6 @@ public class ResourceControllerUnitTest {
         assertEquals(2, response.size());
     }
 
-<<<<<<< HEAD
-    @Test
-    public void testGetResourceById() {
-        ResourceModel resource = new ResourceModel();
-        resource.setResourceNumber(1);
-        resource.setResourceName("Projector");
-        resource.setResourceType("Electronic");
-
-        UUID resourceId = UUID.randomUUID();
-        when(resourceRepository.findById(resourceId)).thenReturn(java.util.Optional.ofNullable(resource));
-
-        ResponseEntity<Object> response = resourceController.listOne(resourceId);
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-    }
-
-    @Test
-    public void testUpdateResource() {
-        ResourceModel existingResource = new ResourceModel();
-        existingResource.setResourceNumber(1);
-        existingResource.setResourceName("Projector");
-        existingResource.setResourceType("Electronic");
-
-        ResourceModel updatedResource = new ResourceModel();
-        updatedResource.setResourceNumber(1);
-        updatedResource.setResourceName("Projector Pro");
-        updatedResource.setResourceType("Electronic");
-
-        UUID resourceId = UUID.randomUUID();
-        when(resourceRepository.findById(resourceId)).thenReturn(java.util.Optional.ofNullable(existingResource));
-        when(resourceRepository.save(existingResource)).thenReturn(updatedResource);
-
-        ResponseEntity<Object> response = resourceController.update(updatedResource, null, resourceId);
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-
-        ResourceModel responseResource = (ResourceModel) response.getBody();
-        assertEquals("Projector Pro", responseResource.getResourceName());
-    }
-=======
     // @Test
     // public void testGetResourceById() {
     //     ResourceModel resource = new ResourceModel();
@@ -165,7 +93,6 @@ public class ResourceControllerUnitTest {
     //     ResourceModel responseResource = (ResourceModel) response.getBody();
     //     assertEquals("Projector Pro", responseResource.getResourceName());
     // }
->>>>>>> inss
 
     @Test
     public void testDeleteResourceById() {
