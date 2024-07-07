@@ -20,6 +20,7 @@ public class FilterAuth extends OncePerRequestFilter {
     @Autowired
     private IUserRepository userRepository;
 
+    @SuppressWarnings("null")
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         // Obtém o caminho da servlet da requisição
