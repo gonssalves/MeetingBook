@@ -40,9 +40,6 @@ public class BookingService {
             throw new Exception("Sala de reserva informada não existe.");
         }
 
-        // UserModel user = bookingModel.getUser();
-        // UUID userId = user.getId();
-
         UUID userId = bookingModel.getUserId();
         
         var bookingUser = this.userRepository.findById(userId).orElse(null);
