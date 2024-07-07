@@ -31,9 +31,9 @@ public class ResourceService {
     public ResourceModel createOrUpdateResource(ResourceModel resourceModel, String methodHttp) throws Exception{
         var resource = this.resourceRepository.findByResourceNumber(resourceModel.getResourceNumber());
 
-        if (methodHttp == "POST" && resource != null) {
+        if (methodHttp.equals("POST") && resource != null) {
             throw new Exception("Recurso já existe");
-        } else if (methodHttp == "PUT" && resource == null) {
+        } else if (methodHttp.equals("PUT") && resource == null) {
             throw new Exception("Recurso não existe");
         }
 

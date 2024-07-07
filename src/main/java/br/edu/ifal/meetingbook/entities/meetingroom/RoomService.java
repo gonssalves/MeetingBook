@@ -28,9 +28,9 @@ public class RoomService {
     public RoomModel createOrUpdateRoom(RoomModel roomModel, String methodHttp) throws Exception{
         var room = this.roomRepository.findByRoomNumber(roomModel.getRoomNumber());
 
-        if (methodHttp == "POST" && room != null) {
+        if (methodHttp.equals("POST") && room != null) {
             throw new Exception("Sala já existe");
-        } else if (methodHttp == "PUT" && room == null) {
+        } else if (methodHttp.equals("PUT") && room == null) {
             throw new Exception("Sala não existe");
         }
        
