@@ -24,9 +24,9 @@ public class BookingService {
     public BookingModel createOrUpdateBooking(BookingModel bookingModel, String methodHttp) throws Exception {
         var booking = this.bookingRepository.findById(bookingModel.getId()).orElse(null);
         
-        if (methodHttp == "POST" && booking != null) {
+        if (methodHttp.equals("POST") && booking != null) {
             throw new Exception("Já existe uma reserva com esse ID");
-        } else if (methodHttp == "PUT" && booking == null) {
+        } else if (methodHttp.equals("PUT") && booking == null) {
             throw new Exception("Reserva não existe");
         }
 
@@ -72,7 +72,7 @@ public class BookingService {
         List<BookingModel> bookingList = this.bookingRepository.findByBookingDate((bookingModel.getBookingDate()));
 
         for(BookingModel bookingItem : bookingList) {
-            if(bookingItem.getBookingStatus() != "Cancelada") {
+            if(!bookingItem.getBookingStatus().equals("Cancelada")) {
                 if(bookingItem.getBookingStartTime() == bookingModel.getBookingStartTime() || bookingItem.getBookingEndTime() == bookingModel.getBookingEndTime()) {
                     throw new Exception("Horário indisponível para reserva.");
                 }  
