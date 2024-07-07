@@ -42,8 +42,7 @@ public class RoomController {
 
    @GetMapping("/")
     public List<RoomModel> listAll(HttpServletRequest request) {
-        var rooms = this.roomRepository.findAll();
-        return rooms;
+        return this.roomRepository.findAll(); 
     }
 
      @GetMapping("/{id}")

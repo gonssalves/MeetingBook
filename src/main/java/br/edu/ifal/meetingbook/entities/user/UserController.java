@@ -42,8 +42,7 @@ public class UserController {
     // Endpoint para listar todos os usuários
     @GetMapping("/")
     public List<UserModel> listAll(HttpServletRequest request) {
-        var users = this.userRepository.findAll();
-        return users;
+        return this.userRepository.findAll();
     }
 
     // Endpoint para listar um único usuário por ID

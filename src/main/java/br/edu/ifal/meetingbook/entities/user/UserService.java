@@ -83,9 +83,7 @@ public class UserService {
             throw new Exception("Usuário não encontrado");
         }
 
-        List<BookingModel> bookings = this.bookingRepository.findByUserId(userId);
-
-        return bookings;
+        return this.bookingRepository.findByUserId(userId);
     }
 
 }

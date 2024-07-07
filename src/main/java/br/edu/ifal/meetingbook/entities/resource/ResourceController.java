@@ -40,8 +40,7 @@ public class ResourceController {
 
     @GetMapping("/")
     public List<ResourceModel> listAll(HttpServletRequest request) {
-        var resources = this.resourceRepository.findAll();
-        return resources;
+        return this.resourceRepository.findAll();
     }
 
     @GetMapping("/{id}")
