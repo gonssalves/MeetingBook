@@ -1,13 +1,5 @@
 package br.edu.ifal.meetingbook.resources;
 
-<<<<<<< HEAD
-import static org.junit.Assert.assertEquals;
-
-import org.junit.Test;
-
-import br.edu.ifal.meetingbook.entities.resource.ResourceModel;
-
-=======
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
@@ -16,7 +8,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import br.edu.ifal.meetingbook.entities.resource.ResourceModel;
 
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
->>>>>>> inss
 public class ResourceModelUnitTest {
     
     @Test
