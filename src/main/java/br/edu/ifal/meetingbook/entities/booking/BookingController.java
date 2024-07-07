@@ -40,8 +40,7 @@ public class BookingController {
 
     @GetMapping("/")
     public List<BookingModel> listAll(HttpServletRequest request) {
-        var bookings = this.bookingRepository.findAll();
-        return bookings;
+        return this.bookingRepository.findAll();
     }    
 
     @GetMapping("/{id}")
