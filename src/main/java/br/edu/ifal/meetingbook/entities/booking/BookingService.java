@@ -89,14 +89,10 @@ public class BookingService {
         return booking;
     }
 
-    public BookingModel deleteOneBooking(UUID id) {
-        var booking = this.bookingRepository.findById(id).orElse(null);
+    public BookingModel deleteOneBooking(UUID id) throws Exception{
+        var booking = this.bookingRepository.findById(id).orElseThrow(() -> new Exception("Reserva informada não foi encontrada"));
+        this.bookingRepository.delete(booking);
         
-        if (booking == null) {
-            throw new RuntimeException("Reserva informada não foi encontrada.");
-        }
-
-        this.bookingRepository.deleteById(id);
         return booking;
     }
 }

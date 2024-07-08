@@ -59,13 +59,9 @@ public class ResourceService {
         return resource;
     }
 
-    public void deleteOneResource(UUID id) throws Exception{
-        var resource = this.resourceRepository.findById(id).orElse(null);
-
-        if (resource == null) {
-            throw new Exception("Recurso não encontrado");
-        }
-
+    public void deleteOneResource(UUID id) throws Exception {
+        var resource = this.resourceRepository.findById(id).orElseThrow(() -> new Exception("Recurso não encontrado"));
         this.resourceRepository.delete(resource);
     }
+    
 }
