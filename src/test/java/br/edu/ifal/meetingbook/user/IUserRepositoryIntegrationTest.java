@@ -5,6 +5,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.ActiveProfiles;
 
 import br.edu.ifal.meetingbook.entities.user.IUserRepository;
 import br.edu.ifal.meetingbook.entities.user.UserModel;
@@ -12,7 +13,8 @@ import br.edu.ifal.meetingbook.entities.user.UserModel;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@ActiveProfiles("test")
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
 @DataJpaTest
 public class IUserRepositoryIntegrationTest {
     @Autowired
@@ -22,16 +24,14 @@ public class IUserRepositoryIntegrationTest {
     private IUserRepository userRepository;
 
     @Test
-    @Rollback(true) // Desfaz as alterações no banco de dados após o teste
+    @Rollback(true)
     public void testFindByEmail() {
-        // Crie um usuário de exemplo e persista-o no banco de dados
         UserModel user = new UserModel("Mr Test", "test", "test@gmail.com", "1234", "Cliente");
         entityManager.persist(user);
+        entityManager.flush();
 
-        // Use o método findByEmail para buscar o usuário no banco de dados
         UserModel foundUser = userRepository.findByEmail("test@gmail.com");
 
-        // Verifique se o usuário foi encontrado com sucesso
         assertThat(foundUser).isNotNull();
         assertThat(foundUser.getEmail()).isEqualTo("test@gmail.com");
     }
@@ -41,6 +41,7 @@ public class IUserRepositoryIntegrationTest {
     public void testFindByUsername() {
         UserModel user = new UserModel("Mr Test", "test", "test@gmail.com", "1234", "Cliente");
         entityManager.persist(user);
+        entityManager.flush();
 
         UserModel foundUser = userRepository.findByUsername("test");
 
@@ -48,3 +49,5 @@ public class IUserRepositoryIntegrationTest {
         assertThat(foundUser.getUsername()).isEqualTo("test");
     }
 }
+
+
